@@ -18,10 +18,6 @@
 
 require "chef/knife"
 require "chef/knife/data_bag_secret_options"
-require "erubis"
-require "chef/knife/bootstrap/chef_vault_handler"
-require "chef/knife/bootstrap/client_builder"
-require "chef/util/path_helper"
 
 class Chef
   class Knife
@@ -389,7 +385,12 @@ class Chef
       attr_reader   :connection
 
       deps do
+        require "erubis"
         require "chef/json_compat"
+        require "chef/util/path_helper"
+        require "chef/knife/bootstrap/chef_vault_handler"
+        require "chef/knife/bootstrap/client_builder"
+        require "chef/knife/bootstrap/train_connector"
       end
 
       banner "knife bootstrap [PROTOCOL://][USER@]FQDN (options)"
@@ -622,8 +623,6 @@ class Chef
       end
 
       def do_connect(conn_options)
-        require "chef/knife/bootstrap/train_connector"
-
         @connection = TrainConnector.new(host_descriptor, connection_protocol, conn_options)
         connection.connect!
       end
