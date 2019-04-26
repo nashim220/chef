@@ -36,7 +36,6 @@ class Chef
         MKTEMP_NIX_COMMAND = "bash -c 'd=$(mktemp -d ${TMPDIR:-/tmp}/chef_XXXXXX); echo $d'".freeze
 
         def initialize(host_url, default_transport, opts)
-
           uri_opts = opts_from_uri(host_url)
           uri_opts[:backend] ||= @default_transport
           @transport_type = uri_opts[:backend]
@@ -72,7 +71,6 @@ class Chef
             arch: arch
           )
           tc
-
         end
 
         def connect!
@@ -174,6 +172,7 @@ class Chef
         def train
           @train
         end
+
         def backend
           @train.connection
         end
